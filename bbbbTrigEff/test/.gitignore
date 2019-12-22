@@ -1,0 +1,4 @@
+crab3/
+*.pyc
+*.root
+*.log
