@@ -22,14 +22,14 @@ print "File : ", filelistname
 triggers = collections.OrderedDict()
 if year == 2016:
 
-    triggers['HLT_QuadJet45_TripleBTagCSV_v'] = (
+    triggers['HLT_QuadJet45_TripleBTagCSV_p087_v'] = (
         (['hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF', 'hltL1sQuadJetCIorTripleJetVBFIorHTT'], 1),
         (['hltQuadCentralJet45'],          4),
         (['hltQuadPFCentralJetLooseID45'], 4),
         (['hltBTagCaloCSVp087Triple'],     3),
     )
 
-    triggers['HLT_DoubleJet90_Double30_TripleBTagCSV_v'] = (
+    triggers['HLT_DoubleJet90_Double30_TripleBTagCSV_p087_v'] = (
         (['hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet'] ,  1),
         (['hltDoubleCentralJet90']                             ,  2),
         (['hltQuadCentralJet30']                               ,  4),
@@ -123,7 +123,12 @@ for f in files:
 
 ### checking all triggers
 results = collections.OrderedDict()
+counts  = collections.OrderedDict()
 for trgName, filterList in triggers.items():
+    nEv = ch.GetEntries(
+        '{trg} == 1'.format(trg=trgName)
+    )
+    counts[trgName]  = nEv
     results[trgName] = []
     for filterDesc in filterList:
         fltString = ' + '.join(filterDesc[0])
@@ -134,9 +139,20 @@ for trgName, filterList in triggers.items():
         results[trgName].append(nEv)
 
 errors = []
+zerocount_errors = []
 print "\n\n----------- SUMMARY -----------"
 for idx, (trgName, values) in enumerate (results.items()):
     print '>>> ', trgName
+
+    # tot counts
+    count = counts[trgName]
+    str_res = '[   OK]' if count > 0 else '[ERROR]'
+    if count == 0:
+        zerocount_errors.append((trgName, count))
+    print '.. {res}  : counts = {count}'.format(res=str_res, count=count)
+    print ".."
+
+    ## filter check
     for istep in range(len(values)):
         result  = values[istep]
         str_res = '[   OK]' if result == 0 else '[ERROR]'
@@ -145,7 +161,14 @@ for idx, (trgName, values) in enumerate (results.items()):
         print '.. {res}  : '.format(res=str_res), triggers[trgName][istep][0]
     print '\n'
 
+if len(zerocount_errors) > 0:
+    print '\n------ ERROR DETAILS [total counts] ------'
+    for trgName, nerr in zerocount_errors:
+        print '.. {trgName} >> {nerr} counts '.format(trgName=trgName, nerr=nerr)
+    print ""
+
 if len(errors) > 0:
-    print '\n------ ERROR DETAILS ------'
+    print '\n------ ERROR DETAILS [filters] ------'
     for trgName, istep, nerr in errors:
         print '.. {trgName}  >> {fil} >> {nerr} events '.format(trgName=trgName, fil=triggers[trgName][istep][0], nerr=nerr)
+    print ""

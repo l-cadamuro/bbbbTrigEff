@@ -2,12 +2,12 @@ import FWCore.ParameterSet.Config as cms
 
 def customize_trg_config_2016(process):
     process.checkTrg.triggerList = cms.vstring(
-        'HLT_QuadJet45_TripleBTagCSV_v',
-        'HLT_DoubleJet90_Double30_TripleBTagCSV_v',
+        'HLT_QuadJet45_TripleBTagCSV_p087_v',
+        'HLT_DoubleJet90_Double30_TripleBTagCSV_p087_v',
     )
 
     process.checkTrg.filterList = cms.vstring(
-        #### HLT_QuadJet45_TripleBTagCSV_v
+        #### HLT_QuadJet45_TripleBTagCSV_p087_v
         ## the two below in OR
         'hltL1sQuadJetC50IorQuadJetC60IorHTT280IorHTT300IorHTT320IorTripleJet846848VBFIorTripleJet887256VBFIorTripleJet927664VBF',
         'hltL1sQuadJetCIorTripleJetVBFIorHTT',  # 1
@@ -16,7 +16,7 @@ def customize_trg_config_2016(process):
         'hltQuadPFCentralJetLooseID45', # 4
         'hltBTagCaloCSVp087Triple',     # 3
         ###
-        ### HLT_DoubleJet90_Double30_TripleBTagCSV_v
+        ### HLT_DoubleJet90_Double30_TripleBTagCSV_p087_v
         'hltL1sTripleJetVBFIorHTTIorDoubleJetCIorSingleJet', #  1
         'hltDoubleCentralJet90',                             #  2
         'hltQuadCentralJet30',                               #  4

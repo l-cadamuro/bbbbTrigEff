@@ -50,6 +50,8 @@ if options.inputFiles:
 else:
     Source_Files = cms.untracked.vstring(
         '/store/data/Run2018A/SingleMuon/MINIAOD/17Sep2018-v2/00000/11697BCC-C4AB-204B-91A9-87F952F9F2C6.root',
+        # '/store/mc/RunIISummer16MiniAODv3/GluGluToHHTo4B_node_SM_13TeV-madgraph/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/50000/8C5FF1BF-3C72-E911-BA91-0CC47A7C34B0.root'
+        # '/store/mc/RunIISummer16MiniAODv3/GluGluToHHTo4B_node_SM_13TeV-madgraph/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/50000/8C5FF1BF-3C72-E911-BA91-0CC47A7C34B0.root'
     )
 
 process.source = cms.Source("PoolSource",
@@ -96,12 +98,13 @@ elif year == 2018:
 else:
     raise RuntimeError("year not valid")
 
+# process.checkTrg.verbose = cms.bool(True)
+
 process.torun = cms.Path(
     process.checkTrg
 )
 
 process.schedule = cms.Schedule(process.torun)
-
 
 ##### screen output stuff
 process.options = cms.untracked.PSet(
