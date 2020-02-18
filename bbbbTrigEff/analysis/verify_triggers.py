@@ -35,7 +35,7 @@ if year == 2016:
         (['hltQuadCentralJet30']                               ,  4),
         (['hltDoublePFCentralJetLooseID90']                    ,  2),
         (['hltQuadPFCentralJetLooseID30']                      ,  4),
-        (['hltBTagCaloCSVp087Triple']                          ,  2),
+        (['hltBTagCaloCSVp087Triple']                          ,  3),
     )
 
 elif year == 2017:
